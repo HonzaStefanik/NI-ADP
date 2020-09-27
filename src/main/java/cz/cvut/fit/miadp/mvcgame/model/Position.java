@@ -5,9 +5,7 @@ public class Position
     private int dimX = 0;
 	private int dimY = 0;
 	
-	public Position()
-	{
-	}
+	public Position() {	}
 
 	public Position(int posX, int posY)
 	{

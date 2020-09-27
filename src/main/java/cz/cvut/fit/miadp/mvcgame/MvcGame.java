@@ -13,7 +13,7 @@ public class MvcGame
 
     public void init()
     {
-        logoPos = new Position( (int)((MvcGameConfig.MAX_X/2)-128), (int)((MvcGameConfig.MAX_Y/2)-128) );
+        logoPos = new Position((MvcGameConfig.MAX_X/2)-128, (int)((MvcGameConfig.MAX_Y/2)-128) );
     }
 
     public void processPressedKeys(List<String> pressedKeysCodes)
