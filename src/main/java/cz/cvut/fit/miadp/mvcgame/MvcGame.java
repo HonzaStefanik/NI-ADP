@@ -1,61 +1,48 @@
 package cz.cvut.fit.miadp.mvcgame;
 
 import java.util.List;
+
 import cz.cvut.fit.miadp.mvcgame.config.MvcGameConfig;
-import cz.cvut.fit.miadp.mvcgame.model.Position;
+import cz.cvut.fit.miadp.mvcgame.controller.GameController;
+import cz.cvut.fit.miadp.mvcgame.model.GameModel;
 // in future, use Bridge to remove this dependency
+import cz.cvut.fit.miadp.mvcgame.view.GameView;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 
-public class MvcGame
-{
-    private Position logoPos;
+public class MvcGame {
 
-    public void init()
-    {
-        logoPos = new Position((MvcGameConfig.MAX_X/2)-128, (int)((MvcGameConfig.MAX_Y/2)-128) );
+    private GameModel model;
+    private GameView view;
+    private GameController controller;
+
+    public void init() {
+        model = new GameModel();
+        view = new GameView(model);
+        controller = view.getController();
     }
 
-    public void processPressedKeys(List<String> pressedKeysCodes)
-    {
-        for(String code : pressedKeysCodes)
-        {
-            switch(code){
-                case "UP":
-                    logoPos.setY(logoPos.getY() - 10);
-                    break;
-                case "DOWN":
-                    logoPos.setY(logoPos.getY() + 10);
-                    break;
-                case "LEFT":
-                    logoPos.setX(logoPos.getX() - 10);
-                    break;
-                case "RIGHT":
-                    logoPos.setX(logoPos.getX() + 10);
-                    break;
-                default: 
-                    //nothing
-            }
+    public void processPressedKeys(List<String> pressedKeysCodes) {
+        this.controller.processPressedKeys(pressedKeysCodes);
+    }
+
+    public void update() {
+        model.update();
+    }
+
+    public void render(GraphicsContext gr) {
+        this.view.setGraphicsContext(gr);
+        if (view.wasUpdate()) {
+            // Clear the canvas
+            gr.clearRect(0, 0, getWindowWidth(), getWindowHeight());
+            this.view.render();
         }
     }
 
-    public void update()
-    {
-        // nothing yet
+    public String getWindowTitle() {
+        return "The NI-ADP MvcGame";
     }
 
-    public void render(GraphicsContext gr)
-    {
-        gr.drawImage(new Image("icons/fit-icon-256x256.png"), logoPos.getX(), logoPos.getY());
-    }
-
-    public String getWindowTitle()
-    {
-        return "The MI-ADP.16 MvcGame";
-    }
-
-    public int getWindowWidth()
-    {
+    public int getWindowWidth() {
         return MvcGameConfig.MAX_X;
     }
 

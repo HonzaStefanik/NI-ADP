@@ -11,6 +11,11 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
+/**
+ LAB 02
+ HW - add remaining game entities (see uml class diagram for lab 2); colission will be life limited
+ */
+
 public class MvcGameJavaFxLauncher extends Application {
 
     private static final MvcGame theMvcGame = new MvcGame();
@@ -31,14 +36,14 @@ public class MvcGameJavaFxLauncher extends Application {
         Group root = new Group();
         Scene theScene = new Scene( root );
         stage.setScene( theScene );
-            
+
         Canvas canvas = new Canvas( winWidth, winHeight );
         root.getChildren().add( canvas );
-            
+
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         ArrayList<String> pressedKeysCodes = new ArrayList<>();
- 
+
         theScene.setOnKeyPressed(
                 e -> {
                     String code = e.getCode().toString();
@@ -48,7 +53,7 @@ public class MvcGameJavaFxLauncher extends Application {
                         pressedKeysCodes.add( code );
                 }
         );
- 
+
         theScene.setOnKeyReleased(
                 e -> {
                     String code = e.getCode().toString();
@@ -57,19 +62,14 @@ public class MvcGameJavaFxLauncher extends Application {
         );
 
         // the game-loop
-        new AnimationTimer()
-        {
-            public void handle(long currentNanoTime)
-            {
-                // Clear the canvas
-                // gc.clearRect(0, 0, winWidth, winHeight);
-    
+        new AnimationTimer() {
+            public void handle(long currentNanoTime) {
                 theMvcGame.processPressedKeys(pressedKeysCodes);
                 theMvcGame.update();
                 theMvcGame.render(gc);
             }
         }.start();
-            
+
         stage.show();
     }
 
