@@ -30,12 +30,8 @@ public class MvcGame {
     }
 
     public void render(GraphicsContext gr) {
-        this.view.setGraphicsContext(gr);
-        if (view.wasUpdate()) {
-            // Clear the canvas
-            gr.clearRect(0, 0, getWindowWidth(), getWindowHeight());
-            this.view.render();
-        }
+        view.setGraphicsContext(gr);
+        view.render();
     }
 
     public String getWindowTitle() {

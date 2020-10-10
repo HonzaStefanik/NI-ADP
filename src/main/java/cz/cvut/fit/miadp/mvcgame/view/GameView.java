@@ -32,7 +32,11 @@ public class GameView implements IObserver {
     public void render() {
         if (gr == null) return;
         drawCannon();
-        wasUpdate = false;
+        if (wasUpdate) {
+            gr.clearRect(0, 0, MvcGameConfig.MAX_X, MvcGameConfig.MAX_Y);
+            drawCannon();
+            wasUpdate = false;
+        }
     }
 
     private void drawCannon() {
@@ -45,9 +49,5 @@ public class GameView implements IObserver {
 
     public void setGraphicsContext(GraphicsContext gr) {
         this.gr = gr;
-    }
-
-    public boolean wasUpdate() {
-        return wasUpdate;
     }
 }
