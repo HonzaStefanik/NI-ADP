@@ -12,8 +12,12 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 /**
- LAB 02
- HW - add remaining game entities (see uml class diagram for lab 2); colission will be life limited
+ * TODO (HW03)
+ * add family B of game objects with different behaviour
+ * add enemies collisions and gameInfo to GameModel
+ * split all remaining game objects into abstract and concrete classes
+ * lifetimelimitedGo
+ * missile location + shooting
  */
 
 public class MvcGameJavaFxLauncher extends Application {

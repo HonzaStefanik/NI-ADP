@@ -6,6 +6,7 @@ public class MvcGameConfig {
     public static final int MOVE_STEP = 2;
     public static final int CANNON_POS_X = 50;
     public static final int CANNON_POS_Y = MAX_Y / 2;
+    public static final int TIME_TICK_PERIOD = 1000;
 
     private MvcGameConfig() {
     }

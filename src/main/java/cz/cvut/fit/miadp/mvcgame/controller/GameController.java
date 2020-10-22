@@ -21,8 +21,10 @@ public class GameController {
                 case "DOWN":
                     model.moveCannonDown();
                     break;
+                case "SPACE":
+                    model.shootCannon();
                 default:
-                    //nothing
+                    // nothing
             }
         }
     }

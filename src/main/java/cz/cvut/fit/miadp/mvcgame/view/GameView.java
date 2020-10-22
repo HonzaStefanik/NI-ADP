@@ -6,48 +6,45 @@ import cz.cvut.fit.miadp.mvcgame.config.MvcGameConfig;
 import cz.cvut.fit.miadp.mvcgame.controller.GameController;
 import cz.cvut.fit.miadp.mvcgame.model.GameModel;
 import cz.cvut.fit.miadp.mvcgame.observer.IObserver;
+import cz.cvut.fit.miadp.mvcgame.visitor.GameObjectRender;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 
 public class GameView implements IObserver {
 
     private GameController controller;
     private GameModel model;
-    private GraphicsContext gr;
-    private boolean wasUpdate;
+    private GraphicsContext graphicsContext;
+    private GameObjectRender gameObjectRender;
+    private int updateCount;
 
     public GameView(GameModel model) {
         this.model = model;
         this.controller = new GameController(model);
         this.model.registerObserver(this);
-        this.wasUpdate = true;
+        this.updateCount = 0;
+        this.gameObjectRender = new GameObjectRender();
     }
 
     @Override
     public void update() {
-        wasUpdate = true;
-        render();
+        updateCount++;
     }
 
     public void render() {
-        if (gr == null) return;
-        drawCannon();
-        if (wasUpdate) {
-            gr.clearRect(0, 0, MvcGameConfig.MAX_X, MvcGameConfig.MAX_Y);
-            drawCannon();
-            wasUpdate = false;
+        if (graphicsContext == null) return;
+        if (updateCount > 0) {
+            graphicsContext.clearRect(0, 0, MvcGameConfig.MAX_X, MvcGameConfig.MAX_Y);
+            model.getGameObjects().forEach(gameObject -> gameObject.acceptVisitor(gameObjectRender));
+            updateCount = 0;
         }
-    }
-
-    private void drawCannon() {
-        gr.drawImage(new Image("images/cannon.png"), model.getCannonPosition().getX(), model.getCannonPosition().getY());
     }
 
     public GameController getController() {
         return controller;
     }
 
-    public void setGraphicsContext(GraphicsContext gr) {
-        this.gr = gr;
+    public void setGraphicsContext(GraphicsContext graphicsContext) {
+        this.graphicsContext = graphicsContext;
+        this.gameObjectRender.setGraphicsContext(graphicsContext);
     }
 }
