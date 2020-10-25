@@ -1,4 +1,4 @@
-package cz.cvut.fit.miadp.mvcgame.model.gameobjects;
+package cz.cvut.fit.miadp.mvcgame.model;
 
 public class Vector {
 

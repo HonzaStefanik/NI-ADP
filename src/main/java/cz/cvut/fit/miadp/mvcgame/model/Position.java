@@ -1,7 +1,5 @@
 package cz.cvut.fit.miadp.mvcgame.model;
 
-import cz.cvut.fit.miadp.mvcgame.model.gameobjects.Vector;
-
 public class Position {
 	private int dimX = 0;
 	private int dimY = 0;

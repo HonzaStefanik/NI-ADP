@@ -1,7 +1,6 @@
 package cz.cvut.fit.miadp.mvcgame.visitor;
 
-import cz.cvut.fit.miadp.mvcgame.model.gameobjects.AbstractCannon;
-import cz.cvut.fit.miadp.mvcgame.model.gameobjects.AbstractMissile;
+import cz.cvut.fit.miadp.mvcgame.model.gameobjects.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -17,6 +16,20 @@ public class GameObjectRender implements IGameObjectVisitor {
     @Override
     public void visitMissile(AbstractMissile missile) {
         graphicsContext.drawImage(new Image("images/missile.png"), missile.getPosition().getX(), missile.getPosition().getY());
+    }
+
+    @Override
+    public void visitEnemy(AbstractEnemy enemy) {
+
+    }
+
+    @Override
+    public void visitCollision(AbstractCollision collision) {
+
+    }
+
+    @Override
+    public void visitGameInfo(AbstractGameInfo gameInfo) {
 
     }
 

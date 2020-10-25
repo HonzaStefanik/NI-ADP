@@ -11,14 +11,6 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-/**
- * TODO (HW03)
- * add family B of game objects with different behaviour
- * add enemies collisions and gameInfo to GameModel
- * split all remaining game objects into abstract and concrete classes
- * lifetimelimitedGo
- * missile location + shooting
- */
 
 public class MvcGameJavaFxLauncher extends Application {
 

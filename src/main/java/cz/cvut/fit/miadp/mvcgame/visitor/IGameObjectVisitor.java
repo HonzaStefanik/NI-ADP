@@ -1,11 +1,12 @@
 package cz.cvut.fit.miadp.mvcgame.visitor;
 
-import cz.cvut.fit.miadp.mvcgame.model.gameobjects.AbstractCannon;
-import cz.cvut.fit.miadp.mvcgame.model.gameobjects.AbstractMissile;
+import cz.cvut.fit.miadp.mvcgame.model.gameobjects.*;
 
 public interface IGameObjectVisitor {
     void visitCannon(AbstractCannon cannon);
     void visitMissile(AbstractMissile missile);
-    // TODO collisions, enemies, gameInfo
+    void visitEnemy(AbstractEnemy enemy);
+    void visitCollision(AbstractCollision collision);
+    void visitGameInfo(AbstractGameInfo gameInfo);
 
 }

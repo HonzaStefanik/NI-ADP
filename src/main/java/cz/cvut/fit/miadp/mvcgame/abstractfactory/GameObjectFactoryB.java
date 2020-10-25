@@ -4,10 +4,9 @@ import cz.cvut.fit.miadp.mvcgame.config.MvcGameConfig;
 import cz.cvut.fit.miadp.mvcgame.model.Position;
 import cz.cvut.fit.miadp.mvcgame.model.gameobjects.*;
 import cz.cvut.fit.miadp.mvcgame.model.gameobjects.familyA.CannonA;
-import cz.cvut.fit.miadp.mvcgame.model.gameobjects.familyA.GameInfoA;
-import cz.cvut.fit.miadp.mvcgame.model.gameobjects.familyA.MissileA;
+import cz.cvut.fit.miadp.mvcgame.model.gameobjects.familyB.MissileB;
 
-public class GameObjectFactoryA implements IGameObjectFactory{
+public class GameObjectFactoryB implements IGameObjectFactory {
 
     @Override
     public AbstractCannon createCannon() {
@@ -16,7 +15,7 @@ public class GameObjectFactoryA implements IGameObjectFactory{
 
     @Override
     public AbstractMissile createMissile(Position position) {
-        return new MissileA(position);
+        return new MissileB(position);
     }
 
     @Override
@@ -31,6 +30,6 @@ public class GameObjectFactoryA implements IGameObjectFactory{
 
     @Override
     public AbstractGameInfo createGameInfo() {
-        return new GameInfoA("test");
+        return null;
     }
 }

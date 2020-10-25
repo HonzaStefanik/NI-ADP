@@ -1,7 +1,8 @@
 package cz.cvut.fit.miadp.mvcgame.model.gameobjects;
 
 import cz.cvut.fit.miadp.mvcgame.model.Position;
-import cz.cvut.fit.miadp.mvcgame.visitor.GameObjectRender;
+import cz.cvut.fit.miadp.mvcgame.model.Vector;
+import cz.cvut.fit.miadp.mvcgame.visitor.IGameObjectVisitor;
 
 public abstract class GameObject {
 
@@ -15,5 +16,5 @@ public abstract class GameObject {
         return position;
     }
 
-    public abstract void acceptVisitor(GameObjectRender gameObjectRender);
+    public abstract void acceptVisitor(IGameObjectVisitor visitor);
 }

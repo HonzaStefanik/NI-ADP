@@ -3,22 +3,19 @@ package cz.cvut.fit.miadp.mvcgame.model;
 import cz.cvut.fit.miadp.mvcgame.abstractfactory.GameObjectFactoryA;
 import cz.cvut.fit.miadp.mvcgame.abstractfactory.IGameObjectFactory;
 import cz.cvut.fit.miadp.mvcgame.config.MvcGameConfig;
-import cz.cvut.fit.miadp.mvcgame.model.gameobjects.AbstractCannon;
-import cz.cvut.fit.miadp.mvcgame.model.gameobjects.AbstractMissile;
-import cz.cvut.fit.miadp.mvcgame.model.gameobjects.GameObject;
-import cz.cvut.fit.miadp.mvcgame.model.gameobjects.Vector;
+import cz.cvut.fit.miadp.mvcgame.model.gameobjects.*;
 import cz.cvut.fit.miadp.mvcgame.observer.IObservable;
 import cz.cvut.fit.miadp.mvcgame.observer.IObserver;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class GameModel implements IObservable {
-    // TODO: enemies, collisions, gameInfo
     private AbstractCannon cannon;
+    private AbstractGameInfo gameInfo;
     private List<AbstractMissile> missiles;
+    private List<AbstractEnemy> enemies;
+    private List<AbstractCollision> collisions;
     private List<IObserver> observers;
     private IGameObjectFactory gameObjectFactory;
 
@@ -27,6 +24,9 @@ public class GameModel implements IObservable {
         this.cannon = this.gameObjectFactory.createCannon();
         this.observers = new ArrayList<>();
         this.missiles = new ArrayList<>();
+        this.enemies = new ArrayList<>();
+        this.collisions = new ArrayList<>();
+        this.gameInfo = gameObjectFactory.createGameInfo();
     }
 
     @Override
@@ -62,10 +62,13 @@ public class GameModel implements IObservable {
     }
 
     public List<GameObject> getGameObjects() {
-        List<GameObject> gameObjcts = new ArrayList<>();
-        gameObjcts.addAll(missiles);
-        gameObjcts.add(cannon);
-        return gameObjcts;
+        List<GameObject> gameObjects = new ArrayList<>();
+        gameObjects.add(cannon);
+        gameObjects.add(gameInfo);
+        gameObjects.addAll(missiles);
+        gameObjects.addAll(enemies);
+        gameObjects.addAll(collisions);
+        return gameObjects;
     }
 
     public void timeTick() {
