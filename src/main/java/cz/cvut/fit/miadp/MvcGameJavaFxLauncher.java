@@ -11,6 +11,12 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
+/**
+ * TODO - HW04
+ * save all game info when creating / setting memento
+ * finish game model interface
+ * refactor code and fix compilation errors created due to introducing proxy for game model
+ */
 
 public class MvcGameJavaFxLauncher extends Application {
 

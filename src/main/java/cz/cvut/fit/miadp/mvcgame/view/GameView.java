@@ -5,6 +5,7 @@ package cz.cvut.fit.miadp.mvcgame.view;
 import cz.cvut.fit.miadp.mvcgame.config.MvcGameConfig;
 import cz.cvut.fit.miadp.mvcgame.controller.GameController;
 import cz.cvut.fit.miadp.mvcgame.model.GameModel;
+import cz.cvut.fit.miadp.mvcgame.model.IGameModel;
 import cz.cvut.fit.miadp.mvcgame.observer.IObserver;
 import cz.cvut.fit.miadp.mvcgame.visitor.GameObjectRender;
 import javafx.scene.canvas.GraphicsContext;
@@ -12,12 +13,12 @@ import javafx.scene.canvas.GraphicsContext;
 public class GameView implements IObserver {
 
     private GameController controller;
-    private GameModel model;
+    private IGameModel model;
     private GraphicsContext graphicsContext;
     private GameObjectRender gameObjectRender;
     private int updateCount;
 
-    public GameView(GameModel model) {
+    public GameView(IGameModel model) {
         this.model = model;
         this.controller = new GameController(model);
         this.model.registerObserver(this);

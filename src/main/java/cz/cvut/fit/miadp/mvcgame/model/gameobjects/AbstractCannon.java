@@ -1,26 +1,46 @@
 package cz.cvut.fit.miadp.mvcgame.model.gameobjects;
 
-import cz.cvut.fit.miadp.mvcgame.config.MvcGameConfig;
-import cz.cvut.fit.miadp.mvcgame.model.Vector;
-import cz.cvut.fit.miadp.mvcgame.visitor.GameObjectRender;
+import cz.cvut.fit.miadp.mvcgame.state.DoubleShootingMode;
+import cz.cvut.fit.miadp.mvcgame.state.IShootingMode;
+import cz.cvut.fit.miadp.mvcgame.state.SingleShootingMode;
 import cz.cvut.fit.miadp.mvcgame.visitor.IGameObjectVisitor;
+
+import java.util.List;
 
 public abstract class AbstractCannon extends GameObject {
 
-    //private int power;
+    protected IShootingMode shootingMode;
+    protected static IShootingMode SINGLE_SHOOTING_MODE = new SingleShootingMode();
+    protected static IShootingMode DOUBLE_SHOOTING_MODE = new DoubleShootingMode();
 
-    public void moveUp() {
-        this.move(new Vector(0, -1 * MvcGameConfig.MOVE_STEP));
+    public void toggleShootingMode() {
+        if (this.shootingMode instanceof SingleShootingMode) {
+            this.shootingMode = DOUBLE_SHOOTING_MODE;
+        } else if (this.shootingMode instanceof DoubleShootingMode) {
+            this.shootingMode = SINGLE_SHOOTING_MODE;
+        }
     }
 
-    public void moveDown() {
-        this.move(new Vector(0, MvcGameConfig.MOVE_STEP));
-    }
 
-    public abstract AbstractMissile shoot();
+    public abstract void moveUp();
+
+    public abstract void moveDown();
+
+    public abstract void aimUp();
+
+    public abstract void aimDown();
+
+    public abstract void powerUp();
+
+    public abstract void powerDown();
+
+    public abstract List<AbstractMissile> shoot();
+
+    public abstract void primitiveShoot();
 
     @Override
     public void acceptVisitor(IGameObjectVisitor visitor) {
         visitor.visitCannon(this);
     }
+
 }

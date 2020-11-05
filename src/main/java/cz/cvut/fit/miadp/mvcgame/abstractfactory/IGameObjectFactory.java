@@ -5,7 +5,7 @@ import cz.cvut.fit.miadp.mvcgame.model.gameobjects.*;
 
 public interface IGameObjectFactory {
     AbstractCannon createCannon();
-    AbstractMissile createMissile(Position position);
+    AbstractMissile createMissile(double initAngle, int initVelocity);
     AbstractEnemy createEnemy();
     AbstractCollision createCollision();
     AbstractGameInfo createGameInfo();
