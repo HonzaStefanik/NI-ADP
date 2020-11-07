@@ -1,12 +1,28 @@
 package cz.cvut.fit.miadp.mvcgame.model;
 
+import cz.cvut.fit.miadp.mvcgame.model.gameobjects.GameObject;
 import cz.cvut.fit.miadp.mvcgame.observer.IObservable;
+import cz.cvut.fit.miadp.mvcgame.strategy.IMovingStrategy;
+
+import java.util.List;
 
 public interface IGameModel extends IObservable {
-    // TODO decide which methods go in this iface - hw04 (definitely will need those which fail at compilation)
-    void moveCannonUp();
+    public void moveCannonUp();
+    public void moveCannonDown();
+    public void shootCannon();
+    public void aimCannonUp();
+    public void aimCannonDown();
+    public void cannonPowerUp();
+    public void cannonPowerDown();
+    public void toggleMovingStrategy();
+    public void toggleShootingMode();
+    public void update();
+    public void timeTick();
+    public List<GameObject> getGameObjects();
+    public IMovingStrategy getMovingStrategy();
+    public Object createMemento();
+    public void setMemento(Object memento);
+    public Position getCannonPosition();
 
-    void moveCannonDown();
 
-    void shootCannon();
 }

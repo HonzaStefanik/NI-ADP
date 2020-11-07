@@ -70,27 +70,31 @@ public class GameModel implements IGameModel {
         notifyObservers();
     }
 
+    @Override
     public void aimCannonUp() {
         cannon.aimUp();
         notifyObservers();
     }
 
+    @Override
     public void aimCannonDown() {
         cannon.aimDown();
         notifyObservers();
     }
 
+    @Override
     public void cannonPowerUp() {
         cannon.powerUp();
         notifyObservers();
     }
 
+    @Override
     public void cannonPowerDown() {
         cannon.powerDown();
         notifyObservers();
     }
 
-
+    @Override
     public List<GameObject> getGameObjects() {
         List<GameObject> gameObjects = new ArrayList<>();
         gameObjects.add(cannon);
@@ -101,10 +105,12 @@ public class GameModel implements IGameModel {
         return gameObjects;
     }
 
+    @Override
     public void timeTick() {
         update();
     }
 
+    @Override
     public void update() {
         moveMissiles();
     }
@@ -135,10 +141,12 @@ public class GameModel implements IGameModel {
         }
     }
 
+    @Override
     public void toggleShootingMode() {
         cannon.toggleShootingMode();
     }
 
+    @Override
     public Position getCannonPosition() {
         return cannon.getPosition();
     }
@@ -147,23 +155,37 @@ public class GameModel implements IGameModel {
         return missiles;
     }
 
+    @Override
     public IMovingStrategy getMovingStrategy() {
         return movingStrategy;
     }
 
+    @Override
     public Memento createMemento() {
         Memento memento = new Memento();
         memento.score = this.score;
+        memento.cannon = this.cannon;
+        memento.enemies = this.enemies;
+        memento.missiles = this.missiles;
+        memento.collisions = this.collisions;
         return memento;
     }
 
+    @Override
     public void setMemento(Object memento) {
         Memento m = (Memento) memento;
         this.score = m.score;
+        this.cannon = m.cannon;
+        this.enemies = m.enemies;
+        this.missiles = m.missiles;
+        this.collisions = m.collisions;
     }
 
-    private class Memento {
+    private static class Memento {
         private int score;
-        // TODO game model state snapshot (info about the rest of the game i guess?)
+        private AbstractCannon cannon;
+        private List<AbstractEnemy> enemies;
+        private List<AbstractMissile> missiles;
+        private List<AbstractCollision> collisions;
     }
 }

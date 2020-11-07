@@ -11,10 +11,10 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-/**
+/** https://gitlab.fit.cvut.cz/NI-ADP/mvcgame2020/commit/8b6bc3f27140bcd6eecb5559d0a6fa864f27fc33?view=parallel#733e43ea8bd177d70eb958da78fc8d504e5004cb - make sure all changes are implemented first
  * TODO - HW04
- * save all game info when creating / setting memento
- * finish game model interface
+ * save all game info when creating / setting memento - done
+ * finish game model interface - done
  * refactor code and fix compilation errors created due to introducing proxy for game model
  */
 
@@ -67,11 +67,11 @@ public class MvcGameJavaFxLauncher extends Application {
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 theMvcGame.processPressedKeys(pressedKeysCodes);
+                //pressedKeysCodes.clear();
                 theMvcGame.update();
                 theMvcGame.render(gc);
             }
         }.start();
-
         stage.show();
     }
 
