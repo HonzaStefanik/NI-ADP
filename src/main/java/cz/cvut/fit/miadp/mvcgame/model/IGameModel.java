@@ -1,5 +1,6 @@
 package cz.cvut.fit.miadp.mvcgame.model;
 
+import cz.cvut.fit.miadp.mvcgame.command.AbstractGameCommand;
 import cz.cvut.fit.miadp.mvcgame.model.gameobjects.GameObject;
 import cz.cvut.fit.miadp.mvcgame.observer.IObservable;
 import cz.cvut.fit.miadp.mvcgame.strategy.IMovingStrategy;
@@ -23,6 +24,7 @@ public interface IGameModel extends IObservable {
     public Object createMemento();
     public void setMemento(Object memento);
     public Position getCannonPosition();
-
+    public void registerCommand(AbstractGameCommand command);
+    public void undoLastCommand();
 
 }

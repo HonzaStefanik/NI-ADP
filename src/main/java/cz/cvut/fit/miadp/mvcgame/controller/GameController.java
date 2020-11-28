@@ -1,6 +1,7 @@
 package cz.cvut.fit.miadp.mvcgame.controller;
 
-import cz.cvut.fit.miadp.mvcgame.memento.Caretaker;
+import cz.cvut.fit.miadp.mvcgame.command.MoveCannonDownCommand;
+import cz.cvut.fit.miadp.mvcgame.command.MoveCannonUpCommand;
 import cz.cvut.fit.miadp.mvcgame.model.IGameModel;
 
 import java.util.List;
@@ -17,10 +18,10 @@ public class GameController {
         for (String code : pressedKeysCodes) {
             switch (code) {
                 case "UP":
-                    model.moveCannonUp();
+                    model.registerCommand(new MoveCannonUpCommand(model));
                     break;
                 case "DOWN":
-                    model.moveCannonDown();
+                    model.registerCommand(new MoveCannonDownCommand(model));
                     break;
                 case "SPACE":
                     model.shootCannon();
@@ -43,11 +44,14 @@ public class GameController {
                 case "N":
                     model.toggleShootingMode();
                     break;
-                case "P":
-                    Caretaker.getInstance().createMemento();
-                    break;
-                case "O":
-                    Caretaker.getInstance().setMemento();
+              //  case "P":
+              //      Caretaker.getInstance().createMemento();
+              //      break;
+              //  case "O":
+              //      Caretaker.getInstance().setMemento();
+              //      break;
+                case "B":
+                    model.undoLastCommand();
                     break;
                 default:
                     // nothing

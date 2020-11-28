@@ -1,6 +1,9 @@
 package cz.cvut.fit.miadp;
 
 import cz.cvut.fit.miadp.mvcgame.MvcGame;
+import cz.cvut.fit.miadp.mvcgame.bridge.GameGraphics;
+import cz.cvut.fit.miadp.mvcgame.bridge.IGameGraphics;
+import cz.cvut.fit.miadp.mvcgame.bridge.JavaFXGraphics;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -11,12 +14,6 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-/** https://gitlab.fit.cvut.cz/NI-ADP/mvcgame2020/commit/8b6bc3f27140bcd6eecb5559d0a6fa864f27fc33?view=parallel#733e43ea8bd177d70eb958da78fc8d504e5004cb - make sure all changes are implemented first
- * TODO - HW04
- * save all game info when creating / setting memento - done
- * finish game model interface - done
- * refactor code and fix compilation errors created due to introducing proxy for game model
- */
 
 public class MvcGameJavaFxLauncher extends Application {
 
@@ -43,6 +40,7 @@ public class MvcGameJavaFxLauncher extends Application {
         root.getChildren().add( canvas );
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
+        IGameGraphics gr = new GameGraphics(new JavaFXGraphics(gc));
 
         ArrayList<String> pressedKeysCodes = new ArrayList<>();
 
@@ -69,7 +67,7 @@ public class MvcGameJavaFxLauncher extends Application {
                 theMvcGame.processPressedKeys(pressedKeysCodes);
                 //pressedKeysCodes.clear();
                 theMvcGame.update();
-                theMvcGame.render(gc);
+                theMvcGame.render(gr);
             }
         }.start();
         stage.show();

@@ -1,5 +1,6 @@
 package cz.cvut.fit.miadp.mvcgame.proxy;
 
+import cz.cvut.fit.miadp.mvcgame.command.AbstractGameCommand;
 import cz.cvut.fit.miadp.mvcgame.model.IGameModel;
 import cz.cvut.fit.miadp.mvcgame.model.Position;
 import cz.cvut.fit.miadp.mvcgame.model.gameobjects.GameObject;
@@ -109,5 +110,15 @@ public class GameModelProxy implements IGameModel {
     @Override
     public void notifyObservers() {
         subject.notifyObservers();
+    }
+
+    @Override
+    public void registerCommand(AbstractGameCommand command) {
+        subject.registerCommand(command);
+    }
+
+    @Override
+    public void undoLastCommand() {
+        subject.undoLastCommand();
     }
 }

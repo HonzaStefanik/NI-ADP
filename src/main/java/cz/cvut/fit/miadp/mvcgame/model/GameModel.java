@@ -2,6 +2,7 @@ package cz.cvut.fit.miadp.mvcgame.model;
 
 import cz.cvut.fit.miadp.mvcgame.abstractfactory.GameObjectFactoryA;
 import cz.cvut.fit.miadp.mvcgame.abstractfactory.IGameObjectFactory;
+import cz.cvut.fit.miadp.mvcgame.command.AbstractGameCommand;
 import cz.cvut.fit.miadp.mvcgame.config.MvcGameConfig;
 import cz.cvut.fit.miadp.mvcgame.model.gameobjects.*;
 import cz.cvut.fit.miadp.mvcgame.observer.IObserver;
@@ -11,6 +12,10 @@ import cz.cvut.fit.miadp.mvcgame.strategy.SimpleMovingStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class GameModel implements IGameModel {
     private int score;
@@ -22,6 +27,8 @@ public class GameModel implements IGameModel {
     private List<IObserver> observers;
     private IGameObjectFactory gameObjectFactory;
     private IMovingStrategy movingStrategy;
+    private Queue<AbstractGameCommand> unexecutedCommands;
+    private Stack<AbstractGameCommand> executedCommands;
 
     public GameModel() {
         this.score = 0;
@@ -33,6 +40,8 @@ public class GameModel implements IGameModel {
         this.collisions = new ArrayList<>();
         this.gameInfo = gameObjectFactory.createGameInfo();
         this.movingStrategy = new SimpleMovingStrategy();
+        this.unexecutedCommands = new LinkedBlockingQueue<>();
+        this.executedCommands = new Stack<>();
     }
 
     @Override
@@ -112,7 +121,8 @@ public class GameModel implements IGameModel {
 
     @Override
     public void update() {
-        moveMissiles();
+        executeCommands();
+        //moveMissiles();
     }
 
     private void destroyMissiles() {
@@ -164,7 +174,8 @@ public class GameModel implements IGameModel {
     public Memento createMemento() {
         Memento memento = new Memento();
         memento.score = this.score;
-        memento.cannon = this.cannon;
+        memento.cannonX = this.getCannonPosition().getX();
+        memento.cannonY = this.getCannonPosition().getY();
         memento.enemies = this.enemies;
         memento.missiles = this.missiles;
         memento.collisions = this.collisions;
@@ -175,15 +186,40 @@ public class GameModel implements IGameModel {
     public void setMemento(Object memento) {
         Memento m = (Memento) memento;
         this.score = m.score;
-        this.cannon = m.cannon;
+        this.cannon.getPosition().setX(m.cannonX);
+        this.cannon.getPosition().setY(m.cannonY);
         this.enemies = m.enemies;
         this.missiles = m.missiles;
         this.collisions = m.collisions;
     }
 
+    @Override
+    public void registerCommand(AbstractGameCommand command) {
+        unexecutedCommands.add(command);
+    }
+
+    @Override
+    public void undoLastCommand() {
+        if (executedCommands.isEmpty()) return;
+        AbstractGameCommand lastCommand = executedCommands.pop();
+        lastCommand.undo();
+        notifyObservers();
+    }
+
+    private void executeCommands() {
+        while (!unexecutedCommands.isEmpty()) {
+            AbstractGameCommand currentCommand = unexecutedCommands.poll();
+            currentCommand.doExecute();
+            executedCommands.push(currentCommand);
+        }
+    }
+
     private static class Memento {
         private int score;
-        private AbstractCannon cannon;
+        //        private AbstractCannon cannon;
+        private int cannonX;
+        private int cannonY;
+
         private List<AbstractEnemy> enemies;
         private List<AbstractMissile> missiles;
         private List<AbstractCollision> collisions;
