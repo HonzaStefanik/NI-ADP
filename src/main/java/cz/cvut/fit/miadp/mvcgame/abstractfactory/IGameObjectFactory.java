@@ -7,6 +7,6 @@ public interface IGameObjectFactory {
     AbstractCannon createCannon();
     AbstractMissile createMissile(double initAngle, int initVelocity);
     AbstractEnemy createEnemy();
-    AbstractCollision createCollision();
+    AbstractCollision createCollision(Position position);
     AbstractGameInfo createGameInfo();
 }

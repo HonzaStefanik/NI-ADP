@@ -31,7 +31,7 @@ public class GameObjectFactoryB implements IGameObjectFactory {
     }
 
     @Override
-    public AbstractCollision createCollision() {
+    public AbstractCollision createCollision(Position position) {
         return null;
     }
 

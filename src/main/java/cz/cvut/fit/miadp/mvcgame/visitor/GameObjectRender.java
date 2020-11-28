@@ -26,7 +26,7 @@ public class GameObjectRender implements IGameObjectVisitor {
 
     @Override
     public void visitCollision(AbstractCollision collision) {
-
+        graphicsContext.drawImage(MvcGameConfig.COLLISION, collision.getPosition());
     }
 
     @Override

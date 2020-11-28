@@ -45,9 +45,7 @@ public class GameModel implements IGameModel {
         this.unexecutedCommands = new LinkedBlockingQueue<>();
         this.executedCommands = new Stack<>();
         this.gameInfo = gameObjectFactory.createGameInfo();
-        for (int i = 0; i < MvcGameConfig.ENEMY_COUNT; i++) {
-            this.enemies.add(gameObjectFactory.createEnemy());
-        }
+        spawnEnemies();
     }
 
     @Override
@@ -129,23 +127,20 @@ public class GameModel implements IGameModel {
     public void update() {
         executeCommands();
         moveMissiles();
-    }
-
-    private void destroyMissiles() {
-        List<AbstractMissile> toRemove = new ArrayList<>();
-        for (AbstractMissile missile : missiles) {
-            if (missile.getPosition().getX() > MvcGameConfig.MAX_X) {
-                toRemove.add(missile);
-            }
+        if (enemies.isEmpty()) {
+            spawnEnemies();
         }
-        missiles.removeAll(toRemove);
     }
 
     private void moveMissiles() {
-        for (AbstractMissile missile : missiles) {
+        // concurrent modifications exceptions were thrown with foreach; probably due to list modification in the loop
+        for (int i = 0; i < missiles.size(); i++) {
+            AbstractMissile missile = missiles.get(i);
             missile.move();
+            hitEnemy(missile);
         }
         destroyMissiles();
+        removeHitEnemies();
         notifyObservers();
     }
 
@@ -253,6 +248,47 @@ public class GameModel implements IGameModel {
     public double getGravity() {
         // TODO allow the user to change it?
         return MvcGameConfig.GRAVITY;
+    }
+
+
+    private void hitEnemy(AbstractMissile missile) {
+        for (AbstractEnemy enemy : enemies) {
+            if (Math.abs(missile.getPosition().getX() - enemy.getPosition().getX()) < MvcGameConfig.ENEMY_HIT_BOX
+                    && Math.abs(missile.getPosition().getY() - enemy.getPosition().getY()) < MvcGameConfig.ENEMY_HIT_BOX) {
+                AbstractCollision collision = gameObjectFactory.createCollision(enemy.getPosition());
+                collisions.add(collision);
+                enemies.remove(enemy);
+                missiles.remove(missile);
+                score++;
+                break;
+            }
+        }
+    }
+
+    private void destroyMissiles() {
+        List<AbstractMissile> toRemove = new ArrayList<>();
+        for (AbstractMissile missile : missiles) {
+            if (missile.getPosition().getX() > MvcGameConfig.MAX_X) {
+                toRemove.add(missile);
+            }
+        }
+        missiles.removeAll(toRemove);
+    }
+
+    private void removeHitEnemies() {
+        List<AbstractCollision> toBeRemoved = new ArrayList<>();
+        for (AbstractCollision collision : collisions) {
+            if (collision.getAge() > MvcGameConfig.COLLISION_DISPLAY_TIME_SECONDS * 1000) {
+                toBeRemoved.add(collision);
+            }
+        }
+        collisions.removeAll(toBeRemoved);
+    }
+
+    private void spawnEnemies() {
+        for (int i = 0; i < MvcGameConfig.ENEMY_COUNT; i++) {
+            this.enemies.add(gameObjectFactory.createEnemy());
+        }
     }
 
     private void executeCommands() {

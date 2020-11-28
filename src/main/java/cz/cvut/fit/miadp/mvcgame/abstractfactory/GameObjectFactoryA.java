@@ -5,10 +5,7 @@ import cz.cvut.fit.miadp.mvcgame.model.GameModel;
 import cz.cvut.fit.miadp.mvcgame.model.IGameModel;
 import cz.cvut.fit.miadp.mvcgame.model.Position;
 import cz.cvut.fit.miadp.mvcgame.model.gameobjects.*;
-import cz.cvut.fit.miadp.mvcgame.model.gameobjects.familyA.CannonA;
-import cz.cvut.fit.miadp.mvcgame.model.gameobjects.familyA.EnemyA;
-import cz.cvut.fit.miadp.mvcgame.model.gameobjects.familyA.GameInfoA;
-import cz.cvut.fit.miadp.mvcgame.model.gameobjects.familyA.MissileA;
+import cz.cvut.fit.miadp.mvcgame.model.gameobjects.familyA.*;
 
 import java.util.Random;
 
@@ -43,8 +40,8 @@ public class GameObjectFactoryA implements IGameObjectFactory{
     }
 
     @Override
-    public AbstractCollision createCollision() {
-        return null;
+    public AbstractCollision createCollision(Position position) {
+        return new CollisionA(position);
     }
 
     @Override
