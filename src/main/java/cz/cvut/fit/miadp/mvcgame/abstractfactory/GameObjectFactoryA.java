@@ -35,7 +35,7 @@ public class GameObjectFactoryA implements IGameObjectFactory{
         Random random = new Random();
         int cannonX = model.getCannonPosition().getX();
         // make sure enemies cant spawn behind / on the cannon
-        int posX = cannonX + random.nextInt(MvcGameConfig.MAX_X - cannonX);
+        int posX = cannonX * 2 + random.nextInt(MvcGameConfig.MAX_X - cannonX);
         // hardcoded 20px since idk the picture sizes; this is done os they wont spawn under the frame
         int posY = random.nextInt(MvcGameConfig.MAX_Y) + 20;
         int type = (Math.random() <= 0.5) ? 1 : 2;
@@ -49,6 +49,6 @@ public class GameObjectFactoryA implements IGameObjectFactory{
 
     @Override
     public AbstractGameInfo createGameInfo() {
-        return new GameInfoA("test");
+        return new GameInfoA(model);
     }
 }

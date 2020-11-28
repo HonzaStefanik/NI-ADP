@@ -1,22 +1,22 @@
 package cz.cvut.fit.miadp.mvcgame.model.gameobjects;
 
+import cz.cvut.fit.miadp.mvcgame.model.GameModel;
+import cz.cvut.fit.miadp.mvcgame.model.IGameModel;
 import cz.cvut.fit.miadp.mvcgame.visitor.IGameObjectVisitor;
 
 public abstract class AbstractGameInfo extends GameObject{
 
-    private String text;
+    protected IGameModel model;
 
-    public AbstractGameInfo(String text) {
-        this.text = text;
+    public AbstractGameInfo(IGameModel model) {
+        this.model = model;
     }
 
     @Override
     public void acceptVisitor(IGameObjectVisitor visitor) {
-        // TODO compliant with UML diagram for lab 03, visitor behaviour will probably be defined in later lectures
+        visitor.visitGameInfo(this);
     }
 
-    public String getText() {
-        return text;
-    }
+    public abstract String getGameInfo();
 
 }

@@ -44,6 +44,7 @@ public class GameModel implements IGameModel {
         this.movingStrategy = new SimpleMovingStrategy();
         this.unexecutedCommands = new LinkedBlockingQueue<>();
         this.executedCommands = new Stack<>();
+        this.gameInfo = gameObjectFactory.createGameInfo();
         for (int i = 0; i < MvcGameConfig.ENEMY_COUNT; i++) {
             this.enemies.add(gameObjectFactory.createEnemy());
         }
@@ -236,6 +237,22 @@ public class GameModel implements IGameModel {
         AbstractGameCommand lastCommand = executedCommands.pop();
         lastCommand.undo();
         notifyObservers();
+    }
+
+    @Override
+    public int getScore() {
+        return score;
+    }
+
+    @Override
+    public int getPower() {
+        return cannon.getPower();
+    }
+
+    @Override
+    public double getGravity() {
+        // TODO allow the user to change it?
+        return MvcGameConfig.GRAVITY;
     }
 
     private void executeCommands() {

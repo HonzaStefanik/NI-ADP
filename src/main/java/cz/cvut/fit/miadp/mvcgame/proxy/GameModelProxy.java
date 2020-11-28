@@ -121,4 +121,19 @@ public class GameModelProxy implements IGameModel {
     public void undoLastCommand() {
         subject.undoLastCommand();
     }
+
+    @Override
+    public int getScore() {
+        return subject.getScore();
+    }
+
+    @Override
+    public int getPower() {
+        return subject.getPower();
+    }
+
+    @Override
+    public double getGravity() {
+        return subject.getGravity();
+    }
 }

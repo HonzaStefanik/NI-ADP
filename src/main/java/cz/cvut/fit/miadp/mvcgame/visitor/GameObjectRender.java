@@ -2,6 +2,7 @@ package cz.cvut.fit.miadp.mvcgame.visitor;
 
 import cz.cvut.fit.miadp.mvcgame.bridge.IGameGraphics;
 import cz.cvut.fit.miadp.mvcgame.config.MvcGameConfig;
+import cz.cvut.fit.miadp.mvcgame.model.Position;
 import cz.cvut.fit.miadp.mvcgame.model.gameobjects.*;
 
 public class GameObjectRender implements IGameObjectVisitor {
@@ -30,7 +31,7 @@ public class GameObjectRender implements IGameObjectVisitor {
 
     @Override
     public void visitGameInfo(AbstractGameInfo gameInfo) {
-
+        graphicsContext.drawText(gameInfo.getGameInfo(), new Position(MvcGameConfig.GAME_INFO_X, MvcGameConfig.GAME_INFO_Y));
     }
 
     public void setGraphicsContext(IGameGraphics graphicsContext) {
