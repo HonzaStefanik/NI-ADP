@@ -122,7 +122,7 @@ public class GameModel implements IGameModel {
     @Override
     public void update() {
         executeCommands();
-        //moveMissiles();
+        moveMissiles();
     }
 
     private void destroyMissiles() {

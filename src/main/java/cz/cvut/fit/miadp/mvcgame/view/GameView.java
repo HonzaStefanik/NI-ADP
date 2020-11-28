@@ -30,6 +30,7 @@ public class GameView implements IObserver {
     public void render() {
         if (graphicsContext == null) return;
         if (updateCount > 0) {
+            graphicsContext.clear();
             model.getGameObjects().forEach(gameObject -> gameObject.acceptVisitor(gameObjectRender));
             updateCount = 0;
         }

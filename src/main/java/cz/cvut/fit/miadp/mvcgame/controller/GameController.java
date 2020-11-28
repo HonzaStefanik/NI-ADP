@@ -1,7 +1,6 @@
 package cz.cvut.fit.miadp.mvcgame.controller;
 
-import cz.cvut.fit.miadp.mvcgame.command.MoveCannonDownCommand;
-import cz.cvut.fit.miadp.mvcgame.command.MoveCannonUpCommand;
+import cz.cvut.fit.miadp.mvcgame.command.*;
 import cz.cvut.fit.miadp.mvcgame.model.IGameModel;
 
 import java.util.List;
@@ -24,32 +23,26 @@ public class GameController {
                     model.registerCommand(new MoveCannonDownCommand(model));
                     break;
                 case "SPACE":
-                    model.shootCannon();
+                    model.registerCommand(new ShootCannonCommand(model));
                     break;
                 case "W":
-                    model.aimCannonUp();
+                    model.registerCommand(new AimCannonUpCommand(model));
                     break;
                 case "S":
-                    model.aimCannonDown();
+                    model.registerCommand(new AimCannonDownCommand(model));
                     break;
                 case "Q":
-                    model.cannonPowerDown();
+                    model.registerCommand(new CannonPowerDownCommand(model));
                     break;
                 case "E":
-                    model.cannonPowerUp();
+                    model.registerCommand(new CannonPowerUpCommand(model));
                     break;
                 case "M":
-                    model.toggleMovingStrategy();
+                    model.registerCommand(new ToggleMovingStrategyCommand(model));
                     break;
                 case "N":
-                    model.toggleShootingMode();
+                    model.registerCommand(new ToggleShootingModeCommand(model));
                     break;
-              //  case "P":
-              //      Caretaker.getInstance().createMemento();
-              //      break;
-              //  case "O":
-              //      Caretaker.getInstance().setMemento();
-              //      break;
                 case "B":
                     model.undoLastCommand();
                     break;
