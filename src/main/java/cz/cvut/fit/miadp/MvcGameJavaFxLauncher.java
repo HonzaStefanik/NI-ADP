@@ -14,6 +14,14 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
+/**
+ * TODO
+ * 1) Implement enemies + collisions
+ * 2) Implement game info
+ * 3) Figure out values to control the game to make the game feel good t ocontrol (eg how fast cannon moves, how fast power changes)
+ * 4) Unit tests  (5, at least of them 2 with mocks)
+ * 5)
+ */
 
 public class MvcGameJavaFxLauncher extends Application {
 
@@ -65,7 +73,7 @@ public class MvcGameJavaFxLauncher extends Application {
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 theMvcGame.processPressedKeys(pressedKeysCodes);
-                pressedKeysCodes.clear();
+                //pressedKeysCodes.clear();
                 theMvcGame.update();
                 theMvcGame.render(gr);
             }

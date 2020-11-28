@@ -15,4 +15,7 @@ public abstract class GameObject implements IVisitable {
         return position;
     }
 
+    public void setPosition(Position position) {
+        this.position = position;
+    }
 }

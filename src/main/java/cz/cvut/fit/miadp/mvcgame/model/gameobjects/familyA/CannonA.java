@@ -16,15 +16,12 @@ import static cz.cvut.fit.miadp.mvcgame.config.MvcGameConfig.POWER_STEP;
 public class CannonA extends AbstractCannon {
 
     private IGameObjectFactory gameObjectFactory;
-    private double angle;
-    private int power;
     private List<AbstractMissile> shootingBatch;
 
     public CannonA(Position initialPosition, IGameObjectFactory gameObjectFactory) {
         this.position = initialPosition;
         this.gameObjectFactory = gameObjectFactory;
-        this.power = MvcGameConfig.INIT_POWER;
-        this.angle = MvcGameConfig.INIT_ANGLE;
+
         this.shootingBatch = new ArrayList<>();
         this.shootingMode = SINGLE_SHOOTING_MODE;
     }

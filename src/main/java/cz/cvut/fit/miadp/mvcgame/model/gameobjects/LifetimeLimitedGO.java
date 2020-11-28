@@ -9,6 +9,9 @@ public abstract class LifetimeLimitedGO extends GameObject {
 
     private LocalDateTime bornAt;
 
+    public LifetimeLimitedGO() {
+    }
+
     protected LifetimeLimitedGO(Position position) {
         this.position = position;
         this.bornAt = LocalDateTime.now();

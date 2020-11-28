@@ -9,10 +9,13 @@ public class MvcGameConfig {
     public static final int TIME_TICK_PERIOD = 1000;
     public static final int POWER_STEP = 10;
     public static final int INIT_POWER = 10;
+    public static final int ENEMY_COUNT = 10;
     public static final double INIT_ANGLE = 0;
     public static final double ANGLE_STEP = Math.PI / 18;
     public static final double GRAVITY = 9.8;
-
+    public static final String ENEMY = "images/enemy";
+    public static final String CANNON = "images/cannon.png";
+    public static final String MISSILE = "images/missile.png";
     private MvcGameConfig() {
     }
 }

@@ -15,6 +15,12 @@ public abstract class AbstractMissile extends LifetimeLimitedGO {
         this.initVelocity = initVelocity;
     }
 
+    public AbstractMissile(AbstractMissile abstractMissile) {
+        this.position = new Position(abstractMissile.getPosition());
+        this.initAngle = abstractMissile.getInitAngle();
+        this.initVelocity = abstractMissile.getInitVelocity();
+    }
+
     @Override
     public void acceptVisitor(IGameObjectVisitor visitor) {
         visitor.visitMissile(this);
@@ -29,6 +35,5 @@ public abstract class AbstractMissile extends LifetimeLimitedGO {
     }
 
     public abstract void move();
-
 
 }

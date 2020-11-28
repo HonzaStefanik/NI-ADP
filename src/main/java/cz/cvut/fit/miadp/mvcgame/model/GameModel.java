@@ -9,14 +9,16 @@ import cz.cvut.fit.miadp.mvcgame.observer.IObserver;
 import cz.cvut.fit.miadp.mvcgame.strategy.IMovingStrategy;
 import cz.cvut.fit.miadp.mvcgame.strategy.RealisticMovingStrategy;
 import cz.cvut.fit.miadp.mvcgame.strategy.SimpleMovingStrategy;
+import javafx.util.Pair;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
-import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.LinkedBlockingQueue;
 
+@Slf4j
 public class GameModel implements IGameModel {
     private int score;
     private AbstractCannon cannon;
@@ -42,6 +44,9 @@ public class GameModel implements IGameModel {
         this.movingStrategy = new SimpleMovingStrategy();
         this.unexecutedCommands = new LinkedBlockingQueue<>();
         this.executedCommands = new Stack<>();
+        for (int i = 0; i < MvcGameConfig.ENEMY_COUNT; i++) {
+            this.enemies.add(gameObjectFactory.createEnemy());
+        }
     }
 
     @Override
@@ -174,11 +179,22 @@ public class GameModel implements IGameModel {
     public Memento createMemento() {
         Memento memento = new Memento();
         memento.score = this.score;
-        memento.cannonX = this.getCannonPosition().getX();
-        memento.cannonY = this.getCannonPosition().getY();
-        memento.enemies = this.enemies;
-        memento.missiles = this.missiles;
-        memento.collisions = this.collisions;
+        memento.cannonX = this.cannon.getPosition().getX();
+        memento.cannonY = this.cannon.getPosition().getY();
+        memento.cannonAngle = cannon.getAngle();
+        memento.cannonPower = cannon.getPower();
+        memento.missilePositions.clear();
+        memento.enemyPositions.clear();
+        missiles.forEach(
+                missile -> memento.missilePositions.add(
+                        new Position(missile.getPosition())
+                )
+        );
+        enemies.forEach(
+                enemy -> memento.enemyPositions.add(
+                        new Pair<>(enemy.getType(), new Position(enemy.getPosition()))
+                )
+        );
         return memento;
     }
 
@@ -186,11 +202,27 @@ public class GameModel implements IGameModel {
     public void setMemento(Object memento) {
         Memento m = (Memento) memento;
         this.score = m.score;
-        this.cannon.getPosition().setX(m.cannonX);
-        this.cannon.getPosition().setY(m.cannonY);
-        this.enemies = m.enemies;
-        this.missiles = m.missiles;
-        this.collisions = m.collisions;
+        cannon.getPosition().setX(m.cannonX);
+        cannon.getPosition().setY(m.cannonY);
+        cannon.setAngle(m.cannonAngle);
+        cannon.setPower(m.cannonPower);
+        missiles.clear();
+        enemies.clear();
+        m.missilePositions.forEach(
+                pos -> {
+                    AbstractMissile missile = gameObjectFactory.createMissile(cannon.getAngle(), cannon.getPower());
+                    missile.setPosition(pos);
+                    missiles.add(missile);
+                }
+        );
+        m.enemyPositions.forEach(
+                pair -> {
+                    AbstractEnemy enemy = gameObjectFactory.createEnemy();
+                    enemy.setPosition(pair.getValue());
+                    enemy.setType(pair.getKey());
+                    enemies.add(enemy);
+                }
+        );
     }
 
     @Override
@@ -216,12 +248,12 @@ public class GameModel implements IGameModel {
 
     private static class Memento {
         private int score;
-        //        private AbstractCannon cannon;
         private int cannonX;
         private int cannonY;
+        private int cannonPower;
+        private double cannonAngle;
 
-        private List<AbstractEnemy> enemies;
-        private List<AbstractMissile> missiles;
-        private List<AbstractCollision> collisions;
+        private List<Pair<Integer, Position>> enemyPositions = new ArrayList<>();
+        private List<Position> missilePositions = new ArrayList<>();
     }
 }

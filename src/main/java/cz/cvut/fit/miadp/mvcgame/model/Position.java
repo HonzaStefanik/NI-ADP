@@ -1,6 +1,6 @@
 package cz.cvut.fit.miadp.mvcgame.model;
 
-public class Position {
+public class Position implements Cloneable {
 	private int dimX = 0;
 	private int dimY = 0;
 
