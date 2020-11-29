@@ -1,6 +1,7 @@
 package cz.cvut.fit.miadp.mvcgame.model;
 
 import cz.cvut.fit.miadp.mvcgame.abstractfactory.GameObjectFactoryA;
+import cz.cvut.fit.miadp.mvcgame.abstractfactory.GameObjectFactoryB;
 import cz.cvut.fit.miadp.mvcgame.abstractfactory.IGameObjectFactory;
 import cz.cvut.fit.miadp.mvcgame.command.AbstractGameCommand;
 import cz.cvut.fit.miadp.mvcgame.config.MvcGameConfig;
@@ -34,7 +35,7 @@ public class GameModel implements IGameModel {
 
     public GameModel() {
         this.score = 0;
-        this.gameObjectFactory = new GameObjectFactoryA(this);
+        this.gameObjectFactory = new GameObjectFactoryB(this);
         this.cannon = this.gameObjectFactory.createCannon();
         this.observers = new ArrayList<>();
         this.missiles = new ArrayList<>();
@@ -127,6 +128,7 @@ public class GameModel implements IGameModel {
     public void update() {
         executeCommands();
         moveMissiles();
+        moveEnemies();
         if (enemies.isEmpty()) {
             spawnEnemies();
         }
@@ -142,6 +144,12 @@ public class GameModel implements IGameModel {
         destroyMissiles();
         removeHitEnemies();
         notifyObservers();
+    }
+
+    private void moveEnemies(){
+        for(AbstractEnemy enemy:enemies){
+            enemy.move();
+        }
     }
 
     public void toggleMovingStrategy() {

@@ -28,12 +28,20 @@ public class CannonB extends AbstractCannon {
 
     @Override
     public void moveUp() {
-        this.move(new Vector(0, -1 * MvcGameConfig.MOVE_STEP));
+        if (position.getY() > 0) {
+            this.move(new Vector(0, -1 * MvcGameConfig.MOVE_STEP));
+        } else {
+            position = new Position(MvcGameConfig.CANNON_POS_X, MvcGameConfig.CANNON_POS_Y);
+        }
     }
 
     @Override
     public void moveDown() {
-        this.move(new Vector(0, MvcGameConfig.MOVE_STEP));
+        if (position.getY() < MvcGameConfig.MAX_Y - 10) {
+            this.move(new Vector(0, MvcGameConfig.MOVE_STEP));
+        } else {
+            position = new Position(MvcGameConfig.CANNON_POS_X, MvcGameConfig.CANNON_POS_Y);
+        }
     }
 
     @Override

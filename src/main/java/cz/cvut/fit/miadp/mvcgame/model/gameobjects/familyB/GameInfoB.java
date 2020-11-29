@@ -10,6 +10,9 @@ public class GameInfoB extends AbstractGameInfo {
 
     @Override
     public String getGameInfo() {
-        return null;
+        return "Score: " + model.getScore()
+                + " | Y: " + model.getCannonPosition().getY()
+                + " | Power: " + model.getPower()
+                + " | Gravity: " + model.getGravity();
     }
 }

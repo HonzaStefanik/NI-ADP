@@ -6,6 +6,7 @@ import cz.cvut.fit.miadp.mvcgame.model.IGameModel;
 import cz.cvut.fit.miadp.mvcgame.model.Position;
 import cz.cvut.fit.miadp.mvcgame.model.gameobjects.*;
 import cz.cvut.fit.miadp.mvcgame.model.gameobjects.familyA.*;
+import cz.cvut.fit.miadp.mvcgame.strategy.EnemyStillStrategy;
 
 import java.util.Random;
 
@@ -33,10 +34,9 @@ public class GameObjectFactoryA implements IGameObjectFactory{
         int cannonX = model.getCannonPosition().getX();
         // make sure enemies cant spawn behind / on the cannon
         int posX = cannonX * 2 + random.nextInt(MvcGameConfig.MAX_X - cannonX);
-        // hardcoded 20px since idk the picture sizes; this is done os they wont spawn under the frame
-        int posY = random.nextInt(MvcGameConfig.MAX_Y) + 20;
+        int posY = random.nextInt(MvcGameConfig.MAX_Y) - MvcGameConfig.ENEMY_HIT_BOX;
         int type = (Math.random() <= 0.5) ? 1 : 2;
-        return new EnemyA(new Position(posX, posY), type);
+        return new EnemyA(new Position(posX, posY), type, new EnemyStillStrategy());
     }
 
     @Override

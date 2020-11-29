@@ -11,8 +11,9 @@ public class MvcGameConfig {
     public static final int TIME_TICK_PERIOD = 1000;
     public static final int POWER_STEP = 1;
     public static final int INIT_POWER = 10;
-    public static final int ENEMY_COUNT = 1;
+    public static final int ENEMY_COUNT = 10;
     public static final int ENEMY_HIT_BOX = 30;
+    public static final int ENEMY_MOVE_STEP = 2;
     public static final int COLLISION_DISPLAY_TIME_SECONDS = 5;
     public static final double INIT_ANGLE = 0;
     public static final double ANGLE_STEP = Math.PI / 18;
