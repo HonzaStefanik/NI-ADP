@@ -44,7 +44,7 @@ public class GameController {
                     model.registerCommand(new ToggleShootingModeCommand(model));
                     break;
                 case "B":
-                    model.undoLastCommand();
+                    model.registerCommand(new UndoActionCommand(model));
                     break;
                 default:
                     // nothing

@@ -67,4 +67,12 @@ public abstract class AbstractCannon extends GameObject {
     public void setPower(int power) {
         this.power = power;
     }
+
+    public IShootingMode getShootingMode() {
+        return shootingMode;
+    }
+
+    public void setShootingMode(IShootingMode shootingMode) {
+        this.shootingMode = shootingMode;
+    }
 }
