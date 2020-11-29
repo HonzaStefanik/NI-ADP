@@ -8,8 +8,7 @@ public class EnemyMoveStrategy implements IEnemyMovementStrategy {
     @Override
     public void move(AbstractEnemy enemy) {
         if (enemy.getPosition().getY() + MvcGameConfig.ENEMY_HIT_BOX >= MvcGameConfig.MAX_Y
-            || enemy.getPosition().getY() + MvcGameConfig.ENEMY_HIT_BOX <= 0
-        ) {
+                || enemy.getPosition().getY() + MvcGameConfig.ENEMY_HIT_BOX <= 0) {
             enemy.setDirection(
                     enemy.getDirection() * -1
             );

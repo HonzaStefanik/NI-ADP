@@ -254,7 +254,6 @@ public class GameModel implements IGameModel {
 
     @Override
     public double getGravity() {
-        // TODO allow the user to change it?
         return MvcGameConfig.GRAVITY;
     }
 

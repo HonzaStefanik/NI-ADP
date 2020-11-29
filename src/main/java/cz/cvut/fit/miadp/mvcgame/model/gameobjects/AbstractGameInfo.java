@@ -1,6 +1,5 @@
 package cz.cvut.fit.miadp.mvcgame.model.gameobjects;
 
-import cz.cvut.fit.miadp.mvcgame.model.GameModel;
 import cz.cvut.fit.miadp.mvcgame.model.IGameModel;
 import cz.cvut.fit.miadp.mvcgame.visitor.IGameObjectVisitor;
 
