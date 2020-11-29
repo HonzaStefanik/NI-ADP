@@ -14,15 +14,6 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-/**
- * TODO
- * 1) Implement enemies + collisions - DONE
- * 2) Implement game info - DONE
- * 3) Figure out values to control the game to make the game feel good t ocontrol (eg how fast cannon moves, how fast power changes) - good enough I think
- * 4) Unit tests  (5, at least of them 2 with mocks) - DONE
- * 5) game object factory B?
- */
-
 public class MvcGameJavaFxLauncher extends Application {
 
     private static final MvcGame theMvcGame = new MvcGame();
